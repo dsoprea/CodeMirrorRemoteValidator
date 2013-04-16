@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="codemirror/lib/codemirror.css">
+        <script src="codemirror/lib/codemirror.js"></script>
+        <script src="codemirror/addon/edit/matchbrackets.js"></script>
+        <script src="codemirror/mode/python/python.js"></script>
+        <script src="codemirror/addon/selection/active-line.js"></script>
+        <link rel="stylesheet" href="codemirror/addon/lint/lint.css">
+        <script src="codemirror/addon/lint/lint.js"></script>
+        <script src="codemirror/addon/lint/javascript-lint.js"></script>
+        <script src="cm-validator-remote.js"></script>
+        <style type="text/css">
+          .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+          .CodeMirror-empty { outline: 1px solid #c22; }
+        </style>
+    </head>
+    <body>
+    <div><textarea id="code" name="code" placeholder="Code goes here...">
+def doesNothing:
+    pass
+    </textarea></div>
+    </body>
+    <script type="text/javascript">
+function check_syntax(code, result_cb)
+{
+    var error_list = [{
+            line_no: 1,
+            column_no: 16,
+            fragment: "def doesNothing:\n",
+            message: "invalid syntax"
+        }]
+
+    result_cb(error_list);
+}
+
+var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    mode: { name: "python",
+            version: 2,
+            singleLineStringErrors: false },
+    lineNumbers: true,
+    indentUnit: 4,
+    tabMode: "shift",
+    gutters: ["CodeMirror-lint-markers"],
+    lintWith: {
+        "getAnnotations": CodeMirror.remoteValidator,
+        "async": true,
+        "check_cb": check_syntax
+    }
+});
+    </script>
+</html>
+

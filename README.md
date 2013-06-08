@@ -1,6 +1,6 @@
-A CodeMirror asynchronous lint plugin that will receive code, send it to a 
+An asynchronous CodeMirror lint plugin that will receive code, send it to a 
 callback (that can send it somewhere via Ajax, etc..), and apply any discovered 
-errors on return.
+errors on return. It's meant to be convenient, not complicated.
 
 Just drop a copy of CodeMirror into a directory named "codemirror", and the 
 example should work. Although the error shown does correspond to the code, this

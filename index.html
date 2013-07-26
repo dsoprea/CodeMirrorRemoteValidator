@@ -18,6 +18,8 @@
     <div><textarea id="code" name="code" placeholder="Code goes here...">
 def doesNothing:
     pass
+
+a__ = 5
     </textarea></div>
     </body>
     <script type="text/javascript">
@@ -25,9 +27,18 @@ function check_syntax(code, result_cb)
 {
     var error_list = [{
             line_no: 1,
-            column_no: 16,
+            column_no_start: 14,
+            column_no_stop: 17,
             fragment: "def doesNothing:\n",
-            message: "invalid syntax"
+            message: "invalid syntax",
+            severity: "error"
+        }, {
+            line_no: 4,
+            column_no_start: 1,
+            column_no_stop: 3,
+            fragment: "a__ = 5\n",
+            message: "convention violation",
+            severity: "warning"
         }]
 
     result_cb(error_list);

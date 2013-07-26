@@ -16,15 +16,33 @@ CodeMirror.remoteValidator = function(cm, updateLinting, options) {
 			var error = error_list[i];
 			
 			var start_line = error.line_no;
-			var start_char = error.column_no;
+
+            var start_char;
+            if(typeof(error.column_no_start) != "undefined")
+			    start_char = error.column_no_start;
+            else
+			    start_char = error.column_no;
+
+			var end_char;
+            if(typeof(error.column_no_stop) != "undefined")
+    			end_char = error.column_no_stop;
+            else
+    			end_char = error.column_no;
+
 			var end_line = error.line_no;
-			var end_char = error.column_no;
 			var message = error.message;
+
+            var severity;
+            if(typeof(error.severity) != "undefined")
+                severity = error.severity;
+            else
+                severity = 'error';
 			
 			found.push({
 				from: CodeMirror.Pos(start_line - 1, start_char),
 				to: CodeMirror.Pos(end_line - 1, end_char),
-				message: message
+				message: message,
+				severity: severity // "error", "warning"
 			});
 		}
 		
